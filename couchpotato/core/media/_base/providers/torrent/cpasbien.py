@@ -17,8 +17,8 @@ log = CPLog(__name__)
 class Base(TorrentProvider):
 
     urls = {
-        'test': 'http://www.cpasbien.cm/',
-        'search': 'http://www.cpasbien.cm/recherche/',
+        'test': 'http://www.cpasbien.ch/',
+        'search': 'http://www.cpasbien.ch/recherche/',
     }
 
     http_time_between_calls = 1 #seconds
