@@ -20,8 +20,8 @@ log = CPLog(__name__)
 
 class Base(TorrentProvider):
     urls = {
-        'site': 'http://www.torrent9.biz/',
-        'search': 'http://www.torrent9.biz/search_torrent/',
+        'site': 'http://www.torrent9.cc/',
+        'search': 'http://www.torrent9.cc/search_torrent/',
     }
 
     def _search(self, movie, quality, results):
