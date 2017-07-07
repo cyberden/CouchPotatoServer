@@ -1,5 +1,4 @@
 from binsearch import BinSearch
-from nzbclub import NZBClub
 from nzbindex import NZBIndex
 
 from bs4 import BeautifulSoup
@@ -27,7 +26,7 @@ class Base(NZBProvider):
     cat_backup_id = None
     
     def _search(self, movie, quality, results):
-        nzbDownloaders = [NZBClub(), BinSearch(), NZBIndex()]
+        nzbDownloaders = [BinSearch(), NZBIndex()]
         MovieTitles = movie['info']['titles']
         moviequality = simplifyString(quality['identifier'])
         movieyear = movie['info']['year']
@@ -210,6 +209,22 @@ class Base(NZBProvider):
                             newsgroup = "alt.binaries.triballs"
                         elif newsgroup == "abdivxf":
                             newsgroup = "alt.binaries.divx.french"
+                        elif newsgroup == "ab.solar-xl":
+                            newsgroup = "alt.binaries.solar-xl"
+                        elif newsgroup == "abbig":
+                            newsgroup = "alt.binaries.big"
+                        elif newsgroup == "ab.insiderz":
+                            newsgroup = "alt.binaries.insiderz"
+                        elif newsgroup == "abwarez":
+                            newsgroup = "alt.binaries.warez"
+                        elif newsgroup == "abdvd":
+                            newsgroup = "alt.binaries.dvd"
+                        elif newsgroup == "abdvd9":
+                            newsgroup = "alt.binaries.dvd9"
+                        elif newsgroup == "absvcdf":
+                            newsgroup = "alt.binaries.svcd.french"
+                        elif newsgroup == "ab.ftd":
+                            newsgroup = "alt.binaries.ftd"
                         else:
                             log.error(u"Unknown binnewz newsgroup: " + newsgroup)
                             continue
