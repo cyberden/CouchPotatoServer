@@ -225,6 +225,10 @@ class Base(NZBProvider):
                             newsgroup = "alt.binaries.svcd.french"
                         elif newsgroup == "ab.ftd":
                             newsgroup = "alt.binaries.ftd"
+                        elif newsgroup == "ab.u-4all":
+                            newsgroup = "alt.binaries.u-4all"
+                        elif newsgroup == "a.b.u4all":
+                            newsgroup = "alt.binaries.u-4all"
                         else:
                             log.error(u"Unknown binnewz newsgroup: " + newsgroup)
                             continue

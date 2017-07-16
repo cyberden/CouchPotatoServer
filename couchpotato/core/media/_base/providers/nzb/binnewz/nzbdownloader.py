@@ -7,8 +7,12 @@ import time
 class NZBDownloader(object):
 
     def __init__( self ):
+        headers = [
+                    ('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17')
+                ]
         self.cj = cookielib.CookieJar()
-        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cj))        
+        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cj),urllib2.HTTPSHandler(), urllib2.HTTPHandler())
+        self.opener.addheaders = headers
         self.lastRequestTime = None
         
     def waitBeforeNextRequest(self):

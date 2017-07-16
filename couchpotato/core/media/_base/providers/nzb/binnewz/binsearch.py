@@ -17,7 +17,7 @@ class BinSearch(NZBDownloader):
             binSearchURLs = [  urllib.urlencode({'server' : 1, 'max': '250', 'q' : filename}), urllib.urlencode({'server' : 2, 'max': '250', 'q' : filename})]
 
         for suffixURL in binSearchURLs:
-            binSearchURL = "http://binsearch.info/?adv_age=&" + suffixURL
+            binSearchURL = "https://binsearch.info/?adv_age=&" + suffixURL
                     
             binSearchSoup = BeautifulSoup( self.open(binSearchURL) )
 
