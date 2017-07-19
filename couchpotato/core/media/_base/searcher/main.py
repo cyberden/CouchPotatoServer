@@ -232,30 +232,33 @@ class Searcher(SearcherBase):
         try: dubbedVersion = media['category']['dubbed_version']
         except: pass
 
-        releaseMetaDatas = media['info']['languages']
+        if 'languages' in media['info']:
+            releaseMetaDatas = media['info']['languages']
 
-        rel_name = simplifyString(rel_name)
-        rel_words = re.split('\W+', rel_name)
-        upper_rel_words = [x.upper() for x in rel_words]
+            rel_name = simplifyString(rel_name)
+            rel_words = re.split('\W+', rel_name)
+            upper_rel_words = [x.upper() for x in rel_words]
 
-        languageWordFound = False;
-        for word in upper_rel_words:
-            matchingTuples = [item for item in getAllLanguages() if item[1].upper() == word]
-            if matchingTuples and any(matchingTuples):
-                languageWordFound = True;
+            languageWordFound = False;
+            for word in upper_rel_words:
+                matchingTuples = [item for item in getAllLanguages() if item[1].upper() == word]
+                if matchingTuples and any(matchingTuples):
+                    languageWordFound = True;
 
-        if dubbedVersion:
-            if 'FRENCH' in upper_rel_words or 'TRUEFRENCH' in upper_rel_words or 'MULTI' in upper_rel_words:
-                return True;
-
-            if languageWordFound == False and 'FRENCH' in releaseMetaDatas:
-                return True;
-        else:
-            if any(l for l in upper_rel_words if l.upper() in releaseMetaDatas) or 'MULTI' in upper_rel_words:
+            if dubbedVersion:
+                if 'FRENCH' in upper_rel_words or 'TRUEFRENCH' in upper_rel_words or 'MULTI' in upper_rel_words:
                     return True;
 
-            if languageWordFound == False:
-                return True;
+                if languageWordFound == False and 'FRENCH' in releaseMetaDatas:
+                    return True;
+            else:
+                if any(l for l in upper_rel_words if l.upper() in releaseMetaDatas) or 'MULTI' in upper_rel_words:
+                    return True;
+
+                if languageWordFound == False:
+                    return True;
+        else:
+            return True;
 
         return False
 
