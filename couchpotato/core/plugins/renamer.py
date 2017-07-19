@@ -948,7 +948,9 @@ Remove it if you want it to be renamed (again, or at least let it try again)
         return string
 
     def checkSnatched(self, fire_scan = True):
-
+        
+        log.info('Check snatched event triggered')
+        
         if self.checking_snatched:
             log.debug('Already checking snatched')
             return False
