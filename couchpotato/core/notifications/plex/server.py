@@ -27,7 +27,7 @@ class PlexServer(object):
 
         return self.last_clients_update + timedelta(minutes=15) < datetime.now()
 
-    def request(self, path, data_type='xml'):
+    def request(self, hostname, path, data_type='xml'):
         if not self.plex.conf('media_server'):
             log.warning("Plex media server hostname is required")
             return None
@@ -38,7 +38,7 @@ class PlexServer(object):
         #Maintain support for older Plex installations without myPlex
         if not self.plex.conf('auth_token') and not self.plex.conf('username') and not self.plex.conf('password'):
             data = self.plex.urlopen('%s/%s' % (
-                self.createHost(self.plex.conf('media_server'), port = 32400),
+                self.createHost(hostname, port = 32400),
                 path
             ))
         else:
@@ -67,11 +67,11 @@ class PlexServer(object):
                     self.plex.conf('auth_token', token)
 
                 except (ValueError, IndexError) as e:
-                    log.info("Error parsing plex.tv response: " + ex(e))
+                    log.info("Error parsing plex.tv response: " + repr(e))
 
             #Add X-Plex-Token header for myPlex support workaround
             data = self.plex.urlopen('%s/%s?X-Plex-Token=%s' % (
-                self.createHost(self.plex.conf('media_server'), port = 32400),
+                self.createHost(hostname, port = 32400),
                 path,
                 self.plex.conf('auth_token')
             ))
@@ -83,40 +83,41 @@ class PlexServer(object):
 
     def updateClients(self, client_names):
         log.info('Searching for clients on Plex Media Server')
-
+ 
         self.clients = {}
 
-        result = self.request('clients')
-        if not result:
-            return
+        for hostname in self.plex.conf('media_server').split(','):
+            result = self.request(hostname, 'clients')
+            if not result:
+                return
 
-        found_clients = [
-            c for c in result.findall('Server')
-            if c.get('name') and c.get('name').lower() in client_names
-        ]
+            found_clients = [
+                c for c in result.findall('Server')
+                if c.get('name') and c.get('name').lower() in client_names
+            ]
 
-        # Store client details in cache
-        for client in found_clients:
-            name = client.get('name').lower()
+            # Store client details in cache
+            for client in found_clients:
+                name = client.get('name').lower()
 
-            self.clients[name] = {
-                'name': client.get('name'),
-                'found': True,
-                'address': client.get('address'),
-                'port': client.get('port'),
-                'protocol': client.get('protocol', 'xbmchttp')
-            }
+                self.clients[name] = {
+                    'name': client.get('name'),
+                    'found': True,
+                    'address': client.get('address'),
+                    'port': client.get('port'),
+                    'protocol': client.get('protocol', 'xbmchttp')
+                }
 
-            client_names.remove(name)
+                client_names.remove(name)
 
-        # Store dummy info for missing clients
-        for client_name in client_names:
-            self.clients[client_name] = {
-                'found': False
-            }
+            # Store dummy info for missing clients
+            for client_name in client_names:
+                self.clients[client_name] = {
+                    'found': False
+                }
 
-        if len(client_names) > 0:
-            log.debug('Unable to find clients: %s', ', '.join(client_names))
+            if len(client_names) > 0:
+                log.debug('Unable to find clients: %s', ', '.join(client_names))
 
         self.last_clients_update = datetime.now()
 
@@ -124,18 +125,19 @@ class PlexServer(object):
         if not section_types:
             section_types = ['movie']
 
-        sections = self.request('library/sections')
+        for hostname in self.plex.conf('media_server').split(','):
+            sections = self.request(hostname, 'library/sections')
 
-        try:
-            for section in sections.findall('Directory'):
-                if section.get('type') not in section_types:
-                    continue
+            try:
+                for section in sections.findall('Directory'):
+                    if section.get('type') not in section_types:
+                        continue
 
-                self.request('library/sections/%s/refresh' % section.get('key'), 'text')
-        except:
-            log.error('Plex library update failed for %s, Media Server not running: %s',
-                      (self.plex.conf('media_server'), traceback.format_exc(1)))
-            return False
+                    self.request(hostname, 'library/sections/%s/refresh' % section.get('key'), 'text')
+            except:
+                log.error('Plex library update failed for %s, Media Server not running: %s',
+                        (hostname, traceback.format_exc(1)))
+                return False
 
         return True
 
