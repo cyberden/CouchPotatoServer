@@ -16,3 +16,4 @@ nosetests.xml
 /.vs
 
 .DS_Store
+/.vscode/

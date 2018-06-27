@@ -21,7 +21,7 @@ config = [{
                     'name': 'media_server',
                     'label': 'Media Server',
                     'default': 'localhost',
-                    'description': 'Hostname/IP, default localhost'
+                    'description': 'Comma separated list of hostnames/IPs, default localhost'
                 },
                 {
                     'name': 'username',
