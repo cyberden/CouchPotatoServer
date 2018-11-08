@@ -23,7 +23,7 @@ class QualityPlugin(Plugin):
     }
 
     qualities = [
-		{'identifier': '2160p', 'hd': True, 'allow_3d': True, 'size': (10000, 650000), 'median_size': 20000, 'label': '2160p', 'width': 3840, 'height': 2160, 'alternative': [], 'allow': [], 'ext':['mkv'], 'tags': ['x264', 'h264', '2160']},
+		{'identifier': '2160p', 'hd': True, 'allow_3d': True, 'size': (10000, 650000), 'median_size': 20000, 'label': '2160p', 'width': 3840, 'height': 2160, 'alternative': [], 'allow': [], 'ext':['mkv'], 'tags': ['x264', 'h264', '2160', 'UHD', 'x265', 'HDR']},
         {'identifier': 'bd50', 'hd': True, 'allow_3d': True, 'size': (20000, 60000), 'median_size': 40000, 'label': 'BR-Disk', 'alternative': ['bd25', ('br', 'disk')], 'allow': ['1080p'], 'ext':['iso', 'img'], 'tags': ['bdmv', 'certificate', ('complete', 'bluray'), 'avc', 'mvc']},
         {'identifier': '1080p', 'hd': True, 'allow_3d': True, 'size': (4000, 20000), 'median_size': 10000, 'label': '1080p', 'width': 1920, 'height': 1080, 'alternative': [], 'allow': [], 'ext':['mkv', 'm2ts', 'ts'], 'tags': ['m2ts', 'x264', 'h264', '1080']},
         {'identifier': '720p', 'hd': True, 'allow_3d': True, 'size': (3000, 10000), 'median_size': 5500, 'label': '720p', 'width': 1280, 'height': 720, 'alternative': [], 'allow': [], 'ext':['mkv', 'ts'], 'tags': ['x264', 'h264', '720']},
@@ -117,7 +117,7 @@ class QualityPlugin(Plugin):
         try:
             quality = db.get('quality', identifier, with_doc = True)['doc']
         except RecordNotFound:
-            log.error("Unable to find '%s' in the quality DB", indentifier)
+            log.error("Unable to find '%s' in the quality DB", identifier)
             quality = None
 
         if quality:
