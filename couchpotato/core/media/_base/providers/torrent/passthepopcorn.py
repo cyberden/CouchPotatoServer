@@ -178,6 +178,7 @@ class Base(TorrentProvider):
         }
 
     def loginSuccess(self, output):
+        log.info('PTP Login response : %s', output)
         try:
             if json.loads(output).get('Result', '').lower() == 'ok':
                 self.login_errors = 0

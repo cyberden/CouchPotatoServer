@@ -159,6 +159,8 @@ class YarrProvider(Provider):
         if self.last_login_check:
             return True
 
+        log.info('Session expired, attempting a new login.')
+
         try:
             output = self.urlopen(self.urls['login'], data = self.getLoginParams())
 
