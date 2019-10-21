@@ -13,8 +13,8 @@ log = CPLog(__name__)
 class Base(TorrentProvider):
 
     urls = {
-        'search': 'https://api.xthor.to/?passkey=%(passkey)s&search=&category=&freeleech=&tmdbid=%(tmdbid)s&size=',
-        'detail': 'https://xthor.to/details.php?id=%s'
+        'search': 'https://api.xthor.tk/?passkey=%(passkey)s&search=&category=&freeleech=&tmdbid=%(tmdbid)s&size=',
+        'detail': 'https://xthor.tk/details.php?id=%s'
     }
 
     def _search(self, movie, quality, results):           
@@ -43,7 +43,7 @@ config = [{
             'tab': 'searcher',
             'list': 'torrent_providers',
             'name': 'xthor',
-            'description': 'See <a href="https://xthor.to/">xthor</a>',
+            'description': 'See <a href="https://xthor.tk/">xthor</a>',
             'icon' : 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAACXBIWXMAAAsTAAALEwEAmpwYAAACRUlEQVR4nEWSS2/TQBSF752nHT+TJmmTtKVICIkFP4H/L7FBLBArpD5U+nIetWPH45m5wyIFzuboSN/ZfQh/wxgbJXk2mWfjWVpMIwEY3Prx9uH+tq7rEMIRw2NJKWfzVVIsWJyhTlk0Et5gGBKFksOvn9/v766PHw4AWuvlchlnSyw+AlNhfEXJGSBjQg6EZvc0mc6dte2+BgDOGFutzrWOgRcQFbD8jO++iLjEqKD2mZAHJoau0aPk0NR2MLwcl8X4EgBB51Cc8lGm2xvZPYj2jgVHfe0GQ0OHiDI9ada/2XS2xGQJagL5CoNVZlMuztI8jrDLLz8oKUHGgQKZLkqmaZYznZQkBWRTSCZMJ1GWyrQYXXzSk5XKptFswRiDeA5uYH0vVMq4kMA15mdifCmoD2ZnPPYWQnlhQHngqFIYtoAY3ADAGTJkSqBKpHnW6QQoeFU6YOHkyucr1+2DiECMACQAC+7AXLcbaSldTfU9E4pHZbj5SsTtvnM331zbBO9BJMBEoM57wzHQyeki1sp5G0wt8gXrqtBUrroeHn7YwZInQA3tsx36qrrnxpgyicbTuVAjaiu/uwUiiKeBSdtunWnB9PB6E1xfVXeHw4ETUd/tZ+OiHE9QJdS+2G7ruq3vm9BVfmihfQLf1fV6s1m/qTEMw+u2KrOoPHvPi/PgjTetbZ7soQ6HV3L9ZlNtNmsiejsAQN/3z48Pbl9FodMCOBKQPexf9/Wuql6apjnS/219G4hKKSEEIiPy1lrn3D+xj/kDN/1GOELQrVcAAAAASUVORK5CYII=',
             'wizard': True,
             'options': [{
